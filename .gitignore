@@ -1,3 +1,6 @@
+# Endpoint files
+*.endpoints
+
 # Serverless directories
 .serverless
 

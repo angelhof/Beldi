@@ -18,12 +18,16 @@ sls deploy -c singleop.yml
 read -p "Please Input HTTP gateway url for beldi-dev-bsingleop: " bp
 read -p "Please Input HTTP gateway url for beldi-dev-singleop: " p
 read -p "Please Input HTTP gateway url for beldi-dev-tsingleop: " tp
+
+## TODO: Install wrk in submodules
+wrk_bin=../wrk/wrk
+# wrk_bin=./tools/wrk
 echo "Running baseline"
-ENDPOINT="$bp" ./tools/wrk -t1 -c1 -d"$duration"s -R1 -s ./benchmark/singleop/workload.lua --timeout 10s "$bp" >/dev/null
+ENDPOINT="$bp" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/singleop/workload.lua --timeout 10s "$bp" >/dev/null
 echo "Running beldi"
-ENDPOINT="$p" ./tools/wrk -t1 -c1 -d"$duration"s -R1 -s ./benchmark/singleop/workload.lua --timeout 10s "$p" >/dev/null
+ENDPOINT="$p" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/singleop/workload.lua --timeout 10s "$p" >/dev/null
 echo "Running beldi-txn"
-ENDPOINT="$tp" ./tools/wrk -t1 -c1 -d"$duration"s -R1 -s ./benchmark/singleop/workload.lua --timeout 10s "$tp" >/dev/null
+ENDPOINT="$tp" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/singleop/workload.lua --timeout 10s "$tp" >/dev/null
 echo "Collecting metrics"
 python ./scripts/singleop/singleop.py --command run
 echo "Cleanup"

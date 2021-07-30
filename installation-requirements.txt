@@ -1,0 +1,5 @@
+go
+npm
+npm serverless
+python2 boto3
+python2 numpy

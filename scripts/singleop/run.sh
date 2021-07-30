@@ -1,3 +1,4 @@
+#!/bin/bash
 read -p "Choose mode (fast or full, default: full): " mode
 mode=${mode:-"full"}
 if [ "$mode" == "fast" ]; then
@@ -13,7 +14,7 @@ make singleop >/dev/null
 echo "Initializing Database"
 go run ./internal/singleop/init/init.go >/dev/null
 echo "Deploying"
-sls deploy -c singleop.yml >/dev/null
+sls deploy -c singleop.yml
 read -p "Please Input HTTP gateway url for beldi-dev-bsingleop: " bp
 read -p "Please Input HTTP gateway url for beldi-dev-singleop: " p
 read -p "Please Input HTTP gateway url for beldi-dev-tsingleop: " tp

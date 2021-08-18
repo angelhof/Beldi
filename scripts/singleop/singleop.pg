@@ -81,7 +81,7 @@ set cntrparam order 4
 set cntrparam linear
 set cntrparam levels 5
 set cntrparam levels auto
-set cntrparam firstlinetype 0 unsorted
+# set cntrparam firstlinetype 0 unsorted
 set cntrparam points 5
 set size ratio 0 1,1
 set origin 0,0

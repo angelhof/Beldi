@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
@@ -12,14 +13,21 @@ import (
 
 var TXN = "DISABLE"
 
+func SerializeSlice(slice []string) string {
+	return strings.Join(slice, ",")
+}
+
 func Handler(env *beldilib.Env) interface{} {
 	if TXN == "ENABLE" {
-		a := shortuuid.New()
-		start := time.Now()
-		beldilib.SyncInvoke(env, "tnop", "")
-		fmt.Printf("DURATION Call %s\n", time.Since(start))
+		var slice []string = make([]string, 0)
+		len := 10
+		for i := 0; i < len; i++ {
+			slice = append(slice, "hi")
+		}
 
-		start = time.Now()
+		a := SerializeSlice(slice)
+
+		start := time.Now()
 		beldilib.TWrite(env, "tappend", "K", a)
 		fmt.Printf("DURATION DWrite %s\n", time.Since(start))
 
@@ -60,9 +68,6 @@ func Handler(env *beldilib.Env) interface{} {
 		beldilib.Read(env, "append", "K")
 		fmt.Printf("DURATION Read %s\n", time.Since(start))
 
-		start = time.Now()
-		beldilib.SyncInvoke(env, "nop", "")
-		fmt.Printf("DURATION Call %s\n", time.Since(start))
 		return 0
 	}
 	if beldilib.TYPE == "BASELINE" {
@@ -89,9 +94,6 @@ func Handler(env *beldilib.Env) interface{} {
 		beldilib.Read(env, "bappend", "K")
 		fmt.Printf("DURATION Read %s\n", time.Since(start))
 
-		start = time.Now()
-		beldilib.SyncInvoke(env, "bnop", "")
-		fmt.Printf("DURATION Call %s\n", time.Since(start))
 		return 0
 	}
 	return 1

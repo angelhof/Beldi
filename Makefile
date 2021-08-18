@@ -13,6 +13,16 @@ singleop:
 	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BASELINE" -o bin/bsingleop/bsingleop internal/singleop/main/main.go
 	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BASELINE" -o bin/bsingleop/bnop internal/singleop/nop/nop.go
 
+append:
+	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BELDI -X github.com/eniac/Beldi/pkg/beldilib.DLOGSIZE=1000" -o bin/append/append internal/append/main/main.go
+	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BELDI -X github.com/eniac/Beldi/pkg/beldilib.DLOGSIZE=1000" -o bin/append/nop internal/append/nop/nop.go
+
+	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BELDI -X main.TXN=ENABLE -X github.com/eniac/Beldi/pkg/beldilib.DLOGSIZE=1000" -o bin/tappend/tappend internal/append/main/main.go
+	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BELDI -X main.TXN=ENABLE -X github.com/eniac/Beldi/pkg/beldilib.DLOGSIZE=1000" -o bin/tappend/tnop internal/append/nop/nop.go
+
+	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BASELINE" -o bin/bappend/bappend internal/append/main/main.go
+	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BASELINE" -o bin/bappend/bnop internal/append/nop/nop.go
+
 hotel-baseline:
 	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BASELINE" -o bin/bhotel/geo internal/hotel/main/handlers/geo/geo.go
 	env GOOS=linux go build -ldflags="-s -w -X github.com/eniac/Beldi/pkg/beldilib.TYPE=BASELINE" -o bin/bhotel/profile internal/hotel/main/handlers/profile/profile.go

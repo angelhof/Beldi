@@ -1,5 +1,10 @@
 go
 npm
 npm serverless
-python2 boto3
-python2 numpy
+python2 boto3 (`python -m pip install boto3`)
+python2 numpy (`python -m pip install numpy`)
+openssl-dev for wrk2 (`sudo apt install libssl-dev`)
+lua JSON (`luarocks install --local json-lua`)
+
+## use `luarocks path` to show the lua path and export it before running
+## use `nvm use --delete-prefix v14.17.4` before running (or whatever version you are using)

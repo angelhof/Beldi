@@ -29,9 +29,9 @@ else
   read -p "Please Input HTTP gateway url for beldi-dev-bappend: " bp
   read -p "Please Input HTTP gateway url for beldi-dev-append: " p
   read -p "Please Input HTTP gateway url for beldi-dev-tappend: " tp
-  echo "bp=$bp"
-  echo "p=$p"
-  echo "tp=$tp"
+  echo "bp=$bp" | tee -a "$endpoints_file"
+  echo "p=$p" | tee -a "$endpoints_file"
+  echo "tp=$tp" | tee -a "$endpoints_file"
 fi
 
 ## TODO: Install wrk in submodules

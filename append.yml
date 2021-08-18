@@ -9,7 +9,6 @@ provider:
   memorySize: 1024
   timeout: 60
   region: us-east-1
-  disableLogs: false
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -39,23 +38,29 @@ functions:
     handler: bin/append/append
     maximumRetryAttempts: 0
     maximumEventAge: 60
+    disableLogs: false
   nop:
     handler: bin/append/nop
     maximumRetryAttempts: 0
     maximumEventAge: 60
+    disableLogs: false
   bappend:
     handler: bin/bappend/bappend
     maximumRetryAttempts: 0
     maximumEventAge: 60
+    disableLogs: false
   bnop:
     handler: bin/bappend/bnop
     maximumRetryAttempts: 0
     maximumEventAge: 60
+    disableLogs: false
   tappend:
     handler: bin/tappend/tappend
     maximumRetryAttempts: 0
     maximumEventAge: 60
+    disableLogs: false
   tnop:
     handler: bin/tappend/tnop
     maximumRetryAttempts: 0
     maximumEventAge: 60
+    disableLogs: false

@@ -20,12 +20,13 @@ func SerializeSlice(slice []string) string {
 func Handler(env *beldilib.Env) interface{} {
 	if TXN == "ENABLE" {
 		var slice []string = make([]string, 0)
-		len := 10
+		len := 100
 		for i := 0; i < len; i++ {
 			slice = append(slice, "hi")
 		}
 
 		a := SerializeSlice(slice)
+		fmt.Printf("Serialized slice %s\n", a)
 
 		start := time.Now()
 		beldilib.TWrite(env, "tappend", "K", a)

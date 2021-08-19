@@ -35,15 +35,19 @@ else
   echo "tp=$tp" | tee -a "$endpoints_file"
 fi
 
+threads=5
+connections=5 # Must be at least as large as the threads
+rate=10
+
 ## TODO: Install wrk in submodules
 wrk_bin=../wrk2/wrk
 # wrk_bin=./tools/wrk
 echo "Running baseline"
-ENDPOINT="$bp" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/append/workload.lua --timeout 10s "$bp" >/dev/null
+ENDPOINT="$bp" "$wrk_bin" "-t${threads}" "-c${connections}" -d"$duration"s "-R${rate}" -s ./benchmark/append/workload.lua --timeout 10s "$bp" >/dev/null
 echo "Running beldi"
-ENDPOINT="$p" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/append/workload.lua --timeout 10s "$p" >/dev/null
+ENDPOINT="$p" "$wrk_bin" "-t${threads}" "-c${connections}" -d"$duration"s "-R${rate}" -s ./benchmark/append/workload.lua --timeout 10s "$p" >/dev/null
 echo "Running beldi-txn"
-ENDPOINT="$tp" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/append/workload.lua --timeout 10s "$tp" >/dev/null
+ENDPOINT="$tp" "$wrk_bin" "-t${threads}" "-c${connections}" -d"$duration"s "-R${rate}" -s ./benchmark/append/workload.lua --timeout 10s "$tp" >/dev/null
 echo "Collecting metrics"
 python3 ./scripts/append/append.py --command run
 echo "Cleanup"

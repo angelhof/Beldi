@@ -12,7 +12,7 @@
 #    	immediate help:   type "help"  (plot window: hit 'h')
 # set terminal qt 0 font "Times,20"
 set term png
-set output "result/singleop/res.png"
+set output "result/append/res.png"
 unset clip points
 set clip one
 unset clip two
@@ -81,7 +81,7 @@ set cntrparam order 4
 set cntrparam linear
 set cntrparam levels 5
 set cntrparam levels auto
-set cntrparam firstlinetype 0 unsorted
+# set cntrparam firstlinetype 0 unsorted
 set cntrparam points 5
 set size ratio 0 1,1
 set origin 0,0
@@ -169,5 +169,5 @@ GNUTERM = "qt"
 x = 0.0
 category = "Read Write CondWrite Invoke"
 ## Last datafile plotted: "op20"
-plot [-1:4][0:70] "result/singleop/singleop" u 2:2:3 w histograms fs pattern 1 lc 2 t "Baseline", "" u 4:4:5 w histograms fs pattern 3 lc 1 t "Beldi", "" u 6:6:7 w histograms fs pattern 5 t "Beldi (cross-table txn)"
+plot [-1:4][0:70] "result/append/append" u 2:2:3 w histograms fs pattern 1 lc 2 t "Baseline", "" u 4:4:5 w histograms fs pattern 3 lc 1 t "Beldi", "" u 6:6:7 w histograms fs pattern 5 t "Beldi (cross-table txn)"
 #    EOF

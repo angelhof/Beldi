@@ -37,7 +37,9 @@ def get_logs(lambda_id):
 ## TODO: Modify the tags
 def get_res(name):
     logs = get_logs(name)
-    tags = ["Read", "DWrite", "CWriteT", "CWriteF", "Call"]
+    # print("\n\n\nLogs for:", name)
+    # print('\n'.join(logs))
+    tags = ["Read", "DWrite", "CWriteT", "CWriteF"]
     res = {}
     for tag in tags:
         res[tag] = []

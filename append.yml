@@ -28,10 +28,9 @@ provider:
         - "*"
 
 package:
-  exclude:
-    - ./**
-  include:
-    - ./bin/**
+  patterns:
+    - '!./**'
+    - './bin/**'
 
 functions:
   append:

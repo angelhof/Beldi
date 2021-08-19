@@ -1,6 +1,7 @@
 #!/bin/bash
-read -p "Choose mode (fast or full, default: full): " mode
-mode=${mode:-"full"}
+# read -p "Choose mode (fast or full, default: full): " mode
+# mode=${mode:-"full"}
+mode="fast"
 if [ "$mode" == "fast" ]; then
   duration=60
 else

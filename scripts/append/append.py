@@ -37,9 +37,9 @@ def get_logs(lambda_id):
 ## TODO: Modify the tags
 def get_res(name):
     logs = get_logs(name)
-    # print("\n\n\nLogs for:", name)
-    # print('\n'.join(logs))
-    tags = ["Read", "DWrite", "CWriteT", "CWriteF"]
+    print("\n\n\nLogs for:", name)
+    print('\n'.join(logs))
+    tags = ["TPLRead", "TPLWrite", "Append", "Txn"]
     res = {}
     for tag in tags:
         res[tag] = []
@@ -68,45 +68,28 @@ def main():
         delete_logs("tappend")
         return
     if args.command == 'run':
-        baseline = get_res("bappend")
+        # baseline = get_res("bappend")
         beldi = get_res("append")
-        beldi_txn = get_res("tappend")
+        # beldi_txn = get_res("tappend")
         with open("result/append/append", "w") as f:
-            f.write("#{:<19} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n".format("op",
-                                                                                 "Baseline", "Baseline 99",
+            f.write("#{:<19} {:<20} {:<20}\n".format("op",
+                                                                                #  "Baseline", "Baseline 99",
                                                                                  "Beldi", "Beldi 99",
-                                                                                 "Beldi-Txn", "Beldi-Txn 99"))
-            f.write("{:<20} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n".format("Read",
-                                                                                baseline["Read"][0],
-                                                                                baseline["Read"][1],
-                                                                                beldi["Read"][0],
-                                                                                beldi["Read"][1],
-                                                                                beldi_txn["Read"][0],
-                                                                                beldi_txn["Read"][1]))
-            f.write("{:<20} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n".format("Write",
-                                                                                baseline["DWrite"][0],
-                                                                                baseline["DWrite"][1],
-                                                                                beldi["DWrite"][0],
-                                                                                beldi["DWrite"][1],
-                                                                                beldi_txn["DWrite"][0],
-                                                                                beldi_txn["DWrite"][1]))
-            f.write("{:<20} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n".format("CondWrite",
-                                                                                baseline["CWriteF"][0],
-                                                                                baseline["CWriteF"][1],
-                                                                                beldi["CWriteF"][0],
-                                                                                beldi["CWriteF"][1],
-                                                                                beldi_txn["CWriteF"][0],
-                                                                                beldi_txn["CWriteF"][1]))
-            ## TODO: Maybe we need to add an append or sth?
+                                                                                #  "Beldi-Txn", "Beldi-Txn 99"
+                                                                                 ))
+            f.write("{:<20} {:<20} {:<20}\n".format("TPLRead",
+                                                                                beldi["TPLRead"][0],
+                                                                                beldi["TPLRead"][1]))
+            f.write("{:<20} {:<20} {:<20}\n".format("TPLWrite",
+                                                                                beldi["TPLWrite"][0],
+                                                                                beldi["TPLWrite"][1]))
+            f.write("{:<20} {:<20} {:<20}\n".format("Append",
+                                                                                beldi["Append"][0],
+                                                                                beldi["Append"][1]))
+            f.write("{:<20} {:<20} {:<20}\n".format("Txn",
+                                                                                beldi["Txn"][0],
+                                                                                beldi["Txn"][1]))
             
-            ## Note: There is no invoke in this experiment
-            # f.write("{:<20} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n".format("Invoke",
-            #                                                                     baseline["Call"][0],
-            #                                                                     baseline["Call"][1],
-            #                                                                     beldi["Call"][0],
-            #                                                                     beldi["Call"][1],
-            #                                                                     beldi_txn["Call"][0],
-            #                                                                     beldi_txn["Call"][1]))
 
 
 if __name__ == "__main__":

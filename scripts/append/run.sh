@@ -7,7 +7,7 @@ else
   duration=600
 fi
 echo "Cleaning logs at AWS"
-python ./scripts/append/append.py --command clean
+python3 ./scripts/append/append.py --command clean
 echo "Compiling"
 make clean >/dev/null
 make append >/dev/null
@@ -44,6 +44,6 @@ ENDPOINT="$p" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/append/worklo
 echo "Running beldi-txn"
 ENDPOINT="$tp" "$wrk_bin" -t1 -c1 -d"$duration"s -R1 -s ./benchmark/append/workload.lua --timeout 10s "$tp" >/dev/null
 echo "Collecting metrics"
-python ./scripts/append/append.py --command run
+python3 ./scripts/append/append.py --command run
 echo "Cleanup"
 go run ./internal/append/init/init.go clean >/dev/null

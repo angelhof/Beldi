@@ -35,9 +35,11 @@ else
   echo "tp=$tp" | tee -a "$endpoints_file"
 fi
 
-threads=5
-connections=5 # Must be at least as large as the threads
-rate=10
+threads=10
+connections=20 # Must be at least as large as the threads
+rate=100
+
+## TODO: Pass those to the append script and make sure that they are shown in the output file
 
 ## TODO: Remove the rest of the installed functions (nop, bappend, tappend) if we only use the beldi one
 

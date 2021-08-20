@@ -47,7 +47,28 @@ def get_res(name):
     for log in logs:
         rs = log.strip().split()
         tag = rs[1]
-        time = float(rs[-1][:-2])
+
+        ## Parse the time and unit
+        second_unit = rs[-1][-1:]
+        assert(second_unit == "s")
+        maybe_unit = rs[-1][-2]
+        if (maybe_unit.isnumeric()):
+            time = float(rs[-1][:-1])
+            unit = second_unit
+        else:
+            time = float(rs[-1][:-2])
+            unit = rs[-1][-2:]
+        
+        ## Adjust according to the unit
+        if (unit == "s"):
+            time *= 1000000
+        elif (unit == "ms"):
+            time *= 1000
+        elif (unit == "\N{MICRO SIGN}s"):
+            time *= 1
+        else:
+            print("Error: Unknown time unit:", unit)
+            exit(1)
         res[tag].append(time)
     for k, v in res.items():
         v = np.array(v)

@@ -2,6 +2,7 @@ import boto3
 import numpy as np
 from pprint import pprint
 from argparse import ArgumentParser
+import sys
 
 log_client = boto3.client('logs')
 
@@ -37,8 +38,8 @@ def get_logs(lambda_id):
 ## TODO: Modify the tags
 def get_res(name):
     logs = get_logs(name)
-    print("\n\n\nLogs for:", name)
-    print('\n'.join(logs))
+    # print("\n\n\nLogs for:", name)
+    # print('\n'.join(logs))
     tags = ["TPLRead", "TPLWrite", "Append", "Txn"]
     res = {}
     for tag in tags:
@@ -91,27 +92,35 @@ def main():
     if args.command == 'run':
         # baseline = get_res("bappend")
         beldi = get_res("append")
-        # beldi_txn = get_res("tappend")
-        with open("result/append/append", "w") as f:
-            f.write("#{:<19} {:<20} {:<20}\n".format("op",
-                                                                                #  "Baseline", "Baseline 99",
-                                                                                 "Beldi", "Beldi 99",
-                                                                                #  "Beldi-Txn", "Beldi-Txn 99"
-                                                                                 ))
-            f.write("{:<20} {:<20} {:<20}\n".format("TPLRead",
-                                                                                beldi["TPLRead"][0],
-                                                                                beldi["TPLRead"][1]))
-            f.write("{:<20} {:<20} {:<20}\n".format("TPLWrite",
-                                                                                beldi["TPLWrite"][0],
-                                                                                beldi["TPLWrite"][1]))
-            f.write("{:<20} {:<20} {:<20}\n".format("Append",
-                                                                                beldi["Append"][0],
-                                                                                beldi["Append"][1]))
-            f.write("{:<20} {:<20} {:<20}\n".format("Txn",
-                                                                                beldi["Txn"][0],
-                                                                                beldi["Txn"][1]))
-            
-
+        beldi_txn = get_res("tappend")
+        # with open("result/append/append", "w") as f:
+        f = sys.stdout
+        f.write("#{:<19} {:<20} {:<20} {:<20} {:<20}\n".format("op",
+                                                                            #  "Baseline", "Baseline 99",
+                                                                                "Beldi", "Beldi 99",
+                                                                                "Beldi-Txn", "Beldi-Txn 99"
+                                                                                ))
+        f.write("{:<20} {:<20} {:<20} {:<20} {:<20}\n".format("TPLRead",
+                                                                            beldi["TPLRead"][0],
+                                                                            beldi["TPLRead"][1],
+                                                                            beldi_txn["TPLRead"][0],
+                                                                            beldi_txn["TPLRead"][1]))
+        f.write("{:<20} {:<20} {:<20} {:<20} {:<20}\n".format("TPLWrite",
+                                                                            beldi["TPLWrite"][0],
+                                                                            beldi["TPLWrite"][1],
+                                                                            beldi_txn["TPLWrite"][0],
+                                                                            beldi_txn["TPLWrite"][1]))
+        f.write("{:<20} {:<20} {:<20} {:<20} {:<20}\n".format("Append",
+                                                                            beldi["Append"][0],
+                                                                            beldi["Append"][1],
+                                                                            beldi_txn["Append"][0],
+                                                                            beldi_txn["Append"][1]))
+        f.write("{:<20} {:<20} {:<20} {:<20} {:<20}\n".format("Txn",
+                                                                            beldi["Txn"][0],
+                                                                            beldi["Txn"][1],
+                                                                            beldi_txn["Txn"][0],
+                                                                            beldi_txn["Txn"][1]))
+        
 
 if __name__ == "__main__":
     main()

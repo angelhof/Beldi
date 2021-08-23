@@ -43,23 +43,3 @@ functions:
     maximumRetryAttempts: 0
     maximumEventAge: 60
     disableLogs: false
-  bappend:
-    handler: bin/bappend/bappend
-    maximumRetryAttempts: 0
-    maximumEventAge: 60
-    disableLogs: false
-  bnop:
-    handler: bin/bappend/bnop
-    maximumRetryAttempts: 0
-    maximumEventAge: 60
-    disableLogs: false
-  tappend:
-    handler: bin/tappend/tappend
-    maximumRetryAttempts: 0
-    maximumEventAge: 60
-    disableLogs: false
-  tnop:
-    handler: bin/tappend/tnop
-    maximumRetryAttempts: 0
-    maximumEventAge: 60
-    disableLogs: false

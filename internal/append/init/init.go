@@ -9,7 +9,8 @@ import (
 
 func ClearAll() {
 	beldilib.DeleteLambdaTables("append")
-	beldilib.DeleteTable("append-local")
+	beldilib.DeleteLambdaTables("tappend")
+	beldilib.DeleteTable("tappend-local")
 }
 
 func main() {
@@ -23,14 +24,17 @@ func main() {
 	ClearAll()
 	beldilib.WaitUntilAllDeleted([]string{
 		"append", "append-log", "append-collector",
-		"append-local", // For transactions
+		"tappend", "tappend-log", "tappend-collector",
+		"tappend-local", // For transactions
 	})
 	beldilib.CreateLambdaTables("append")
-	beldilib.CreateMainTable("append-local")
-	beldilib.WaitUntilActive("append-local")
+	beldilib.CreateLambdaTables("tappend")
+	beldilib.CreateMainTable("tappend-local")
+	beldilib.WaitUntilActive("tappend-local")
 
 	// TODO: Modify these to write a list
 	time.Sleep(60 * time.Second)
 
 	beldilib.Populate("append", "K", "", false)
+	beldilib.Populate("tappend", "K", "", false)
 }

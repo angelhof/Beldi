@@ -38,8 +38,8 @@ functions:
     maximumRetryAttempts: 0
     maximumEventAge: 60
     disableLogs: false
-  nop:
-    handler: bin/append/nop
+  tappend:
+    handler: bin/append/tappend
     maximumRetryAttempts: 0
     maximumEventAge: 60
     disableLogs: false

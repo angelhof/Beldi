@@ -35,8 +35,8 @@ else
   echo "tp=$tp" | tee -a "$endpoints_file"
 fi
 
-threads=10
-connections=20 # Must be at least as large as the threads
+threads=1
+connections=1 # Must be at least as large as the threads
 rate=100
 
 ## TODO: Pass those to the append script and make sure that they are shown in the output file
@@ -46,9 +46,11 @@ rate=100
 ## TODO: Install wrk in submodules
 wrk_bin=../wrk2/wrk
 # wrk_bin=./tools/wrk
-echo "Running beldi"
-ENDPOINT="$p" "$wrk_bin" "-t${threads}" "-c${connections}" -d"$duration"s "-R${rate}" -s ./benchmark/append/workload.lua --timeout 10s "$p" > "./result/append/wrk-t${threads}-c${connections}-r${rate}.log"
+echo "Running append beldi no-txn"
+ENDPOINT="$p" "$wrk_bin" "-t${threads}" "-c${connections}" -d"$duration"s "-R${rate}" -s ./benchmark/append/workload.lua --timeout 10s "$p" > "./result/append/wrk-t${threads}-c${connections}-r${rate}.no-txn.log"
+echo "Running append beldi"
+ENDPOINT="$tp" "$wrk_bin" "-t${threads}" "-c${connections}" -d"$duration"s "-R${rate}" -s ./benchmark/append/workload.lua --timeout 10s "$p" > "./result/append/wrk-t${threads}-c${connections}-r${rate}.log"
 echo "Collecting metrics"
-python3 ./scripts/append/append.py --command run
+python3 ./scripts/append/append.py --command run > "./result/append/append-t${threads}-c${connections}-r${rate}"
 echo "Cleanup"
 go run ./internal/append/init/init.go clean >/dev/null
